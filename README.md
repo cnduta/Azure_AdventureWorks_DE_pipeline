@@ -113,15 +113,14 @@ This project implements the **Medallion (Lakehouse) Architecture**:
 - Product catalogue
 - Territory and regional data
 
-Source: [Microsoft Adventure Works Sample Data](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure)
-
+Source: [ Adventure Works Sample Data](https://www.kaggle.com/datasets/ukveteran/adventure-works)
 ---
 
 ## 🚧 Project Status
 
 This project is actively being built. Progress:
 
-- [ ] Upload raw Adventure Works CSV files
+- [ x] Upload raw Adventure Works CSV files
 - [ ] Configure ADLS Gen2 containers (bronze/silver/gold)
 - [ ] Build ADF ingestion pipeline (CSV → Bronze)
 - [ ] Databricks: Bronze → Silver transformation
