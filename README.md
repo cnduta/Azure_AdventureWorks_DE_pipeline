@@ -120,7 +120,7 @@ Source: [ Adventure Works Sample Data](https://www.kaggle.com/datasets/ukveteran
 
 This project is actively being built. Progress:
 
-- [ x] Upload raw Adventure Works CSV files
+- [x] Upload raw Adventure Works CSV files
 - [ ] Configure ADLS Gen2 containers (bronze/silver/gold)
 - [ ] Build ADF ingestion pipeline (CSV → Bronze)
 - [ ] Databricks: Bronze → Silver transformation
