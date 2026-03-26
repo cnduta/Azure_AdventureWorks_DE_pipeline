@@ -15,6 +15,8 @@ Analytics for business intelligence reporting.
 ## 🏗️ Architecture
 GitHub (REST API) → Azure Data Factory → ADLS Gen2 → 
 Azure Databricks → Azure Synapse Analytics → Power BI
+![AW_ARCHITECTURE](https://github.com/user-attachments/assets/538c9d02-4637-4487-8af8-905276baeb6e)
+
 
 ## 🛠️ Tech Stack
 - **Ingestion & Orchestration:** Azure Data Factory / Pipeline scheduling and data movement
