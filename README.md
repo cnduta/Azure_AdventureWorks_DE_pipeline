@@ -81,6 +81,6 @@ Source: [ Adventure Works Sample Data](https://www.kaggle.com/datasets/ukveteran
 8. Connect visualisation layer
 
 ## 📫 Author
-Caroline Nduta
-Data Engineer 
+Caroline Nduta <br>
+Data Engineer <br>
 www.linkedin.com/in/caroline-nduta-data
