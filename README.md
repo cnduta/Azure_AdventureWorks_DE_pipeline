@@ -80,7 +80,7 @@ Source: [ Adventure Works Sample Data](https://www.kaggle.com/datasets/ukveteran
 7. Execute Synapse SQL scripts in order
 8. Connect visualisation layer
 
-##📫 Author
+## 📫 Author
 Caroline Nduta
 Data Engineer 
 www.linkedin.com/in/caroline-nduta-data
