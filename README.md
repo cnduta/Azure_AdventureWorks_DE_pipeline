@@ -6,7 +6,7 @@
 ![Synapse](https://img.shields.io/badge/Azure%20Synapse-0078D4?style=flat&logo=microsoftazure&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Completed-Green)
 
-##📌 Project Overview
+## 📌 Project Overview
 An end-to-end data engineering pipeline built on Microsoft Azure, 
 ingesting Adventure Works sales data from GitHub, transforming it 
 through a medallion architecture, and serving it via Azure Synapse 
@@ -25,7 +25,7 @@ Azure Databricks → Azure Synapse Analytics → Power BI
 - **Security:** Azure Key Vault, Managed Identity, RBAC
 - **Format:** Parquet & Delta Lake (silver & gold layers)
 
-##🥉🥈🥇 Medallion Architecture
+## 🥉🥈🥇 Medallion Architecture
 | Layer | Location | Description |
 |-------|----------|-------------|
 | Bronze | ADLS /bronze | Raw CSV files ingested from GitHub via ADF |
