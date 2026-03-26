@@ -1,146 +1,58 @@
-# Azure AdventureWorks Data Engineering Pipeline
+# Adventure Works Azure Data Engineering Project
 
-![Azure](https://img.shields.io/badge/Azure-Data%20Engineering-0078D4?style=flat&logo=microsoftazure&logoColor=white)
-![ADF](https://img.shields.io/badge/Azure%20Data%20Factory-0078D4?style=flat&logo=microsoftazure&logoColor=white)
-![Databricks](https://img.shields.io/badge/Databricks-FF3621?style=flat&logo=databricks&logoColor=white)
-![Synapse](https://img.shields.io/badge/Azure%20Synapse-0078D4?style=flat&logo=microsoftazure&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Completed-Green)
+## Project Overview
+An end-to-end data engineering pipeline built on Microsoft Azure, 
+ingesting Adventure Works sales data from GitHub, transforming it 
+through a medallion architecture, and serving it via Azure Synapse 
+Analytics for business intelligence reporting.
 
----
+## Architecture
+GitHub (REST API) → Azure Data Factory → ADLS Gen2 → 
+Azure Databricks → Azure Synapse Analytics → Power BI
 
-## 📌 Project Overview
+## Tech Stack
+- **Orchestration:** Azure Data Factory
+- **Storage:** Azure Data Lake Storage Gen2
+- **Transformation:** Azure Databricks (PySpark)
+- **Serving:** Azure Synapse Analytics (Serverless SQL Pool)
+- **Visualisation:** Power BI / Synapse Charts
+- **Security:** Azure Key Vault, Managed Identity, RBAC
+- **Format:** Delta Lake (silver & gold layers)
 
-This project demonstrates a **production-style, end-to-end data engineering pipeline** built on the Microsoft Azure ecosystem, using the Adventure Works dataset — a fictional bicycle manufacturing company commonly used in data engineering and analytics scenarios.
+## Medallion Architecture
+| Layer | Location | Description |
+|-------|----------|-------------|
+| Bronze | ADLS /bronze | Raw CSV files ingested from GitHub via ADF |
+| Silver | ADLS /silver | Cleaned, typed, enriched Delta tables |
+| Gold | ADLS /gold | Aggregated business-ready Delta tables |
 
-The pipeline ingests raw CSV data, transforms it through a **Medallion Architecture** (Bronze → Silver → Gold), and serves clean, aggregated data for reporting via Azure Synapse Analytics.
-
----
-
-## 🏗️ Architecture
-
-```
-Raw CSV Files (GitHub)
-        │
-        ▼
-┌──────────────────┐
-│  Azure Data      │  ← Ingestion & Orchestration
-│  Factory (ADF)   │
-└──────────────────┘
-        │
-        ▼
-┌──────────────────┐
-│  ADLS Gen2       │  ← Data Lake Storage
-│  (Bronze Layer)  │     Raw data lands here
-└──────────────────┘
-        │
-        ▼
-┌──────────────────┐
-│  Databricks      │  ← Transformation
-│  Silver Layer    │     Cleaned, typed, deduplicated
-│  Gold Layer      │     Aggregated, business-ready
-└──────────────────┘
-        │
-        ▼
-┌──────────────────┐
-│  Azure Synapse   │  ← Serving Layer
-│  Analytics       │     SQL queries & reporting
-└──────────────────┘
-```
-
----
-
-## 📂 Repository Structure
-
-```
-Azure_AdventureWorks_DE_pipeline/
-│
-├── README.md                        ← You are here
-├── architecture-diagram.png         ← Visual pipeline diagram
-│
-├── data/
-│   └── raw/                         ← Source Adventure Works CSV files
-│       ├── customers.csv
-│       ├── sales_orders.csv
-│       ├── products.csv
-│       └── ...
-│
-├── adf/
-│   └── pipelines/                   ← Exported ADF pipeline JSON configs
-│
-├── databricks/
-│   └── notebooks/                   ← PySpark transformation notebooks
-│       ├── 01_bronze_to_silver.py   ← Cleaning & standardisation
-│       ├── 02_silver_to_gold.py     ← Aggregations & business logic
-│       └── utils/
-│
-├── synapse/
-│   └── sql_scripts/                 ← SQL scripts for the serving layer
-│
-└── docs/
-    └── notes.md                     ← Architecture decisions & learnings
-```
-
----
-
-## 🛠️ Tools & Technologies
-
-| Layer | Tool | Purpose |
-|---|---|---|
-| Ingestion & Orchestration | Azure Data Factory | Pipeline scheduling and data movement |
-| Storage | ADLS Gen2 | Data lake with Bronze/Silver/Gold containers |
-| Transformation | Databricks + PySpark | Data cleaning, typing, and aggregation |
-| Serving | Azure Synapse Analytics | SQL-based querying and reporting |
-| Source Control | GitHub | Version control for notebooks, configs, and data |
-
----
-
-## 🥉🥈🥇 Medallion Architecture
-
-This project implements the **Medallion (Lakehouse) Architecture**:
-
-- **Bronze** — Raw data as ingested from source CSVs. No transformation. Exact copy of source.
-- **Silver** — Cleaned and standardised data. Nulls handled, data types corrected, duplicates removed.
-- **Gold** — Business-ready aggregations. Fact and dimension tables optimised for reporting.
-
----
-
-## 📊 Dataset
-
-**Adventure Works** is a sample dataset representing a fictional bicycle manufacturer. It includes:
-
+## Datasets
+Adventure Works sales data including:
+- Sales transactions (2015, 2016, 2017)
 - Customer demographics
-- Sales orders and order details
-- Product catalogue
-- Territory and regional data
+- Product catalogue and categories
+- Territory/region mapping
+- Returns data
+- Calendar dimensions
 
-Source: [ Adventure Works Sample Data](https://www.kaggle.com/datasets/ukveteran/adventure-works)
----
+## Key Transformations
+- Extracted Month, Year, Month Name from Calendar date column
+- Created Full Name from customer Prefix, FirstName, LastName
+- Split ProductSKU and ProductName to first segment only
+- Unioned Sales 2015/2016/2017 using wildcard path read
+- Calculated Revenue as OrderQuantity × OrderLineItem
+- Standardised OrderNumber format (S → T prefix)
+- Converted StockDate to timestamp format
 
-## 🚧 Project Status
+## Gold Layer Tables
+- `sales_enriched` — main fact table joining all dimensions
+- `revenue_by_territory` — sales aggregated by country and region
+- `revenue_by_product` — performance by product and category
+- `customer_summary` — revenue and orders per customer
+- `returns_analysis` — return volumes by product and territory
 
-This project is actively being built. Progress:
-
-- [x] Upload raw Adventure Works CSV files
-- [ ] Configure ADLS Gen2 containers (bronze/silver/gold)
-- [ ] Build ADF ingestion pipeline (CSV → Bronze)
-- [ ] Databricks: Bronze → Silver transformation
-- [ ] Databricks: Silver → Gold aggregation
-- [ ] Synapse: Serving layer SQL scripts
-- [ ] Architecture diagram
-- [ ] Final documentation & write-up
-
----
-
-## 💡 Key Learnings
-
-*(To be updated as the project progresses)*
-
----
-
-## 📫 About Me
-
-I'm a data professional transitioning into Data Engineering, with a background in SQL, Python, and Power BI. Currently building hands-on Azure DE skills and looking for **Data Engineer roles in the UK**.
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Caroline%20Nduta-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/caroline-nduta-data)
-[![Email](https://img.shields.io/badge/Email-ndutacaroline13.cn%40gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:ndutacaroline13.cn@gmail.com)
-[![Portfolio](https://img.shields.io/badge/Portfolio-PORTFOLIO--PROJECTS-181717?style=flat&logo=github&logoColor=white)](https://github.com/cnduta/PORTFOLIO-PROJECTS)
+## Synapse Views
+- `vw_monthly_revenue` — monthly revenue trends by year
+- `vw_top_products` — top 10 products by revenue
+- `vw_customer_segments` — customer breakdown by occupation
+- `vw_returns_by_territory` — return rates by region
